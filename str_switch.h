@@ -41,9 +41,9 @@ namespace s_s
         return *str ? (1 + str_len(str + 1)) : 0;
     }
 
-    constexpr ullong str_hash(const char* const str, const uchar curr_len)
+    constexpr ullong str_hash(const char* const str, const uchar current_len)
     {
-        return *str ? (raise_128_to(curr_len - 1) * static_cast<uchar>(*str) + str_hash(str + 1, curr_len - 1)) : 0;
+        return *str ? (raise_128_to(current_len - 1) * static_cast<uchar>(*str) + str_hash(str + 1, current_len - 1)) : 0;
     }
 
     inline ullong str_hash_for_switch(const char* const str)
