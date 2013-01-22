@@ -1,0 +1,60 @@
+﻿#ifndef STR_SWITCH_H
+#define STR_SWITCH_H
+
+#include <string>
+
+#define SWITCH(str)  switch(s_s::str_hash_for_switch(str))
+#define CASE(str)    static_assert(s_s::str_is_correct(str) && (s_s::str_len(str) <= s_s::MAX_LEN),\
+"CASE string contains wrong characters, or it`s length is greater than 10");\
+case s_s::str_hash(str, s_s::str_len(str))
+#define DEFAULT  default
+
+namespace s_s
+{
+    typedef unsigned char uchar;
+    typedef unsigned long long ullong;
+
+    const uchar MAX_LEN = 10;
+    const ullong N_HASH = static_cast<ullong>(-1);
+
+    constexpr ullong raise_128_to(const uchar power)
+    {
+        return (power == 9) ? 0x8000000000000000ULL :
+               (power == 8) ? 0x100000000000000ULL :
+               (power == 7) ? 0x2000000000000ULL :
+               (power == 6) ? 0x40000000000ULL :
+               (power == 5) ? 0x800000000ULL :
+               (power == 4) ? 0x10000000ULL :
+               (power == 3) ? 0x200000ULL :
+               (power == 2) ? 0x4000ULL :
+               (power == 1) ? 0x80ULL :
+                              0x1ULL;
+    }
+
+    constexpr bool str_is_correct(const char* const str)
+    {
+        return (static_cast<signed char>(*str) > 0) ? str_is_correct(str + 1) : (*str ? false : true);
+    }
+
+    constexpr uchar str_len(const char* const str)
+    {
+        return *str ? (1 + str_len(str + 1)) : 0;
+    }
+
+    constexpr ullong str_hash(const char* const str, const uchar curr_len)
+    {
+        return *str ? (raise_128_to(curr_len - 1) * static_cast<uchar>(*str) + str_hash(str + 1, curr_len - 1)) : 0;
+    }
+
+    inline ullong str_hash_for_switch(const char* const str)
+    {
+        return (str_is_correct(str) && (str_len(str) <= MAX_LEN)) ? str_hash(str, str_len(str)) : N_HASH;
+    }
+
+    inline ullong str_hash_for_switch(const std::string& str)
+    {
+        return (str_is_correct(str.c_str()) && (str.length() <= MAX_LEN)) ? str_hash(str.c_str(), str.length()) : N_HASH;
+    }
+}
+
+#endif  // STR_SWITCH_H
