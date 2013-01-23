@@ -5,7 +5,7 @@
 
 #define SWITCH(str)  switch(s_s::str_hash_for_switch(str))
 #define CASE(str)    static_assert(s_s::str_is_correct(str) && (s_s::str_len(str) <= s_s::MAX_LEN),\
-"CASE string contains wrong characters, or it`s length is greater than 10");\
+"CASE string contains wrong characters, or its length is greater than 10");\
 case s_s::str_hash(str, s_s::str_len(str))
 #define DEFAULT  default
 
@@ -19,16 +19,7 @@ namespace s_s
 
     constexpr ullong raise_128_to(const uchar power)
     {
-        return (power == 9) ? 0x8000000000000000ULL :
-               (power == 8) ? 0x100000000000000ULL :
-               (power == 7) ? 0x2000000000000ULL :
-               (power == 6) ? 0x40000000000ULL :
-               (power == 5) ? 0x800000000ULL :
-               (power == 4) ? 0x10000000ULL :
-               (power == 3) ? 0x200000ULL :
-               (power == 2) ? 0x4000ULL :
-               (power == 1) ? 0x80ULL :
-                              0x1ULL;
+        return 1ULL << 7 * power;
     }
 
     constexpr bool str_is_correct(const char* const str)
