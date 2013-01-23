@@ -5,7 +5,7 @@
 
 #define SWITCH(str)  switch(s_s::str_hash_for_switch(str))
 #define CASE(str)    static_assert(s_s::str_is_correct(str) && (s_s::str_len(str) <= s_s::MAX_LEN),\
-"CASE string contains wrong characters, or its length is greater than 10");\
+"CASE string contains wrong characters, or its length is greater than 9");\
 case s_s::str_hash(str, s_s::str_len(str))
 #define DEFAULT  default
 
