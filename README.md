@@ -1,7 +1,7 @@
 str_switch
 ==========
 
-"Switch" for strings in C++11.
-This code should work on the any C++11 compiler.
+Implementation of "switch-case" statements for strings in C++11.
+This code should work for any C++11 compiler.
 
-You can freely to use and modify it for any purpose, without attribution.
+You can freely use and modify it for any purposes, with or without attribution.
